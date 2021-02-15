@@ -27,21 +27,17 @@ const LastSeenComponent: React.FC<LastSeenProps> = (props: LastSeenProps) => {
     useEffect(() => {
         lastSeenRef.current = props.lastSeen;
         stopTimer();
-        startTimer();
+        Tick();
     }, [props.lastSeen]);
 
     const handleAppState = (nextState: AppStateStatus): void => {
         if (appState.current.match(/inactive|background/) && nextState === "active") {
-            startTimer();
+            Tick();
         }
         if (appState.current === "active" && nextState.match(/inactive|background/)) {
             stopTimer();
         }
         appState.current = nextState;
-    };
-
-    const startTimer = (): void => {
-        formatTimestamp(moment().unix() - lastSeenRef.current);
     };
 
     const refreshTimer = (delay: number) => {
@@ -53,8 +49,7 @@ const LastSeenComponent: React.FC<LastSeenProps> = (props: LastSeenProps) => {
     };
 
     const Tick = (): void => {
-        let currenttDif: number = moment().unix() - lastSeenRef.current;
-        formatTimestamp(currenttDif);
+        formatTimestamp(moment().unix() - lastSeenRef.current);
     };
 
     const getDelay = (secondsToFullMinute: number): number => (60 - secondsToFullMinute) * 1000;
