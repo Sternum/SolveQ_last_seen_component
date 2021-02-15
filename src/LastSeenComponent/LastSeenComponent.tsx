@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Text, View, AppState, AppStateStatus, Alert } from "react-native";
+import { Text, View, AppState, AppStateStatus } from "react-native";
 import moment from "moment";
 import LastSeenComponentStyle from "./LastSeenComponent.style";
 
