@@ -11,10 +11,9 @@ const LastSeenComponent: React.FC<LastSeenProps> = (props: LastSeenProps) => {
 
     const appState = useRef(AppState.currentState);
     const lastSeenRef = useRef(props.lastSeen);
+    const lastSeenTimer = useRef<ReturnType<typeof setTimeout>>();
 
     const [lastSeenLabel, setLastSeenLabel] = useState<string>("");
-
-    let LastSeentimer: ReturnType<typeof setTimeout>;
 
     useEffect(() => {
         AppState.addEventListener("change", handleAppState);
@@ -41,11 +40,11 @@ const LastSeenComponent: React.FC<LastSeenProps> = (props: LastSeenProps) => {
     };
 
     const refreshTimer = (delay: number) => {
-        LastSeentimer = setTimeout(Tick, delay);
+        lastSeenTimer.current = setTimeout(Tick, delay);
     };
 
     const stopTimer = (): void => {
-        if (LastSeentimer) clearTimeout(LastSeentimer);
+        if (lastSeenTimer.current) clearTimeout(lastSeenTimer.current);
     };
 
     const Tick = (): void => {
